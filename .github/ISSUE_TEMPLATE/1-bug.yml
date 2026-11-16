@@ -1,0 +1,89 @@
+name: Report a bug
+description: Something in the game is broken, crashes, looks wrong or behaves differently from the original 1.3.11.
+title: "[Bug] "
+labels: ["bug", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Only the first three boxes are required. It takes about a minute.
+
+        **Good to know:** this port deliberately keeps the bugs and quirks of the original SCP - Containment Breach v1.3.11. If the original game does the same thing, it will stay. If you are not sure, report it anyway.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What went wrong, and what did you expect instead? Screenshots or a short video help a lot - drag them straight into this box.
+      placeholder: "Example: SCP-173 did not move at all in the first containment chamber after the lights went out."
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How can I make it happen?
+      description: Where were you and what were you doing? If you used a map seed, a custom map or a save, mention it.
+      placeholder: |
+        1. New game, seed "abc", difficulty Euclid, intro enabled
+        2. Walk to ...
+        3. ...
+    validations:
+      required: true
+  - type: dropdown
+    id: build
+    attributes:
+      label: Which version of the port?
+      options:
+        - Windows
+        - Windows - Modded build
+        - Mac
+        - Mac - Modded build
+    validations:
+      required: true
+  - type: dropdown
+    id: original
+    attributes:
+      label: Does the original game (v1.3.11) do the same thing?
+      options:
+        - I don't know
+        - No - the original behaves differently
+        - Yes - the original does this too
+      default: 0
+    validations:
+      required: false
+  - type: dropdown
+    id: often
+    attributes:
+      label: How often does it happen?
+      options:
+        - Every time
+        - Sometimes
+        - It happened once
+      default: 0
+    validations:
+      required: false
+  - type: textarea
+    id: log
+    attributes:
+      label: Log file (very helpful for crashes and error boxes)
+      description: |
+        Drag the file **Player.log** into this box. Grab it before you start the game again, because it is replaced on every launch (the run before that is kept as Player-prev.log).
+
+        **Windows:** press Win+R, paste the line below and press Enter, then drag Player.log here.
+        `%USERPROFILE%\AppData\LocalLow\DefaultCompany\SCP - Containment Breach`
+        (Modded build: `%USERPROFILE%\AppData\LocalLow\DefaultCompany\SCP - Containment Breach (Modded)`)
+
+        **Mac:** in Finder press Cmd+Shift+G and paste
+        `~/Library/Logs/DefaultCompany/SCP - Containment Breach`
+        (Modded build: `~/Library/Logs/DefaultCompany/SCP - Containment Breach (Modded)`)
+
+        The log can contain your computer's user name inside file paths. Everything posted here is public.
+    validations:
+      required: false
+  - type: input
+    id: system
+    attributes:
+      label: Your computer (optional)
+      description: Operating system and graphics card, if you know them.
+      placeholder: "Windows 11, GeForce GTX 1060"
+    validations:
+      required: false

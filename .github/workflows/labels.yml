@@ -1,0 +1,34 @@
+# Creates / updates the labels this tracker uses. Runs by itself the first time the files are uploaded,
+# and again whenever this file is changed. It can also be started by hand: Actions -> Set up labels -> Run workflow.
+name: Set up labels
+on:
+  push:
+    branches: [main]
+    paths: [".github/workflows/labels.yml"]
+  workflow_dispatch:
+permissions:
+  issues: write
+jobs:
+  labels:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Create or update labels
+        run: |
+          gh label create "bug" --color D73A4A --description "Something in the port is broken" --force
+          gh label create "mod loader" --color 1D76DB --description "Modded build, Mods menu, ModKit, hooks" --force
+          gh label create "crash" --color B60205 --description "Crash, freeze or error box" --force
+          gh label create "needs triage" --color FBCA04 --description "New report, not looked at yet" --force
+          gh label create "confirmed" --color D93F0B --description "Reproduced - it is a real bug in the port" --force
+          gh label create "needs info" --color C5DEF5 --description "Waiting for more details from the reporter" --force
+          gh label create "fixed in next update" --color 0E8A16 --description "Already fixed - the fix arrives with the next download" --force
+          gh label create "fixed" --color 0E8A16 --description "Fixed in the current download" --force
+          gh label create "original game behaviour" --color 5319E7 --description "The original v1.3.11 does this too, so the port keeps it" --force
+          gh label create "duplicate" --color CFD3D7 --description "Already reported in another issue" --force
+      - name: Remove GitHub's default labels that this tracker does not use
+        run: |
+          for l in "documentation" "enhancement" "good first issue" "help wanted" "invalid" "question" "wontfix"; do
+            gh label delete "$l" --yes || true
+          done

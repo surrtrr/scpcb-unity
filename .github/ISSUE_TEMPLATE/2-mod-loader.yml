@@ -1,0 +1,69 @@
+name: Mod loader or modding problem
+description: For the Modded build - a mod will not load, the Mods menu misbehaves, a modding hook or the ModKit does not work as documented.
+title: "[Mods] "
+labels: ["mod loader", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This form is for problems with the **mod loader itself** (the Modded build, the Mods menu, the ModKit, hooks).
+
+        If the game only breaks while one particular mod is switched on, the mod is probably at fault: please tell that mod's author. The **FIND PROBLEM MOD** button in the Mods menu finds the mod responsible for you.
+  - type: dropdown
+    id: who
+    attributes:
+      label: I am
+      options:
+        - a player using mods
+        - a mod author
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What went wrong, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How can I make it happen?
+      description: Steps to reproduce. Mod authors - the smallest piece of code or the smallest mod folder that shows the problem is ideal (zip it and drag it in).
+    validations:
+      required: true
+  - type: dropdown
+    id: build
+    attributes:
+      label: Which build?
+      options:
+        - Windows - Modded build
+        - Mac - Modded build
+    validations:
+      required: true
+  - type: dropdown
+    id: nomods
+    attributes:
+      label: Does it still happen with every mod switched off?
+      options:
+        - I have not tried
+        - Yes - it happens without any mods
+        - No - only with mods on
+      default: 0
+    validations:
+      required: false
+  - type: textarea
+    id: mods
+    attributes:
+      label: Mod report and log
+      description: |
+        Drag these two files into this box:
+
+        1. **mod_report.txt** - in the game's `Mods` folder (Mods menu -> OPEN FOLDER). It lists your mods, their load order and any conflicts found.
+        2. **Player.log**
+           Windows: Win+R, paste `%USERPROFILE%\AppData\LocalLow\DefaultCompany\SCP - Containment Breach (Modded)`
+           Mac: Finder, Cmd+Shift+G, paste `~/Library/Logs/DefaultCompany/SCP - Containment Breach (Modded)`
+
+        Player.log is replaced every time the game starts, so grab it before you launch again. It can contain your computer's user name inside file paths, and everything posted here is public.
+    validations:
+      required: false

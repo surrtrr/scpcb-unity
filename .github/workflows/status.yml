@@ -1,0 +1,33 @@
+# Keeps the status labels tidy so the issue list reads correctly at a glance:
+#   closed as "completed"   -> gets the green "fixed" label
+#   closed as "not planned" -> the open-status labels are removed
+#   reopened                -> "fixed" is removed again
+name: Status labels
+on:
+  issues:
+    types: [closed, reopened]
+permissions:
+  issues: write
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      ISSUE: ${{ github.event.issue.number }}
+      ACTION: ${{ github.event.action }}
+      REASON: ${{ github.event.issue.state_reason }}
+    steps:
+      - name: Update labels
+        run: |
+          if [ "$ACTION" = "closed" ]; then
+            for l in "needs triage" "needs info" "fixed in next update"; do
+              gh issue edit "$ISSUE" --remove-label "$l" || true
+            done
+            if [ "$REASON" = "completed" ]; then
+              gh issue edit "$ISSUE" --remove-label "confirmed" || true
+              gh issue edit "$ISSUE" --add-label "fixed"
+            fi
+          else
+            gh issue edit "$ISSUE" --remove-label "fixed" || true
+          fi
